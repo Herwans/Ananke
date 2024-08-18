@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{3597E562-F338-4E34-BD9B-821F19B8DADA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ananke.Api", "src\Ananke.Api\Ananke.Api.csproj", "{5A2F68FD-A9F8-4564-B4C2-C0505C0DEDE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ananke.Application", "src\Ananke.Application\Ananke.Application.csproj", "{FD58E28D-B27F-47D6-9C6A-34D03BB7B12A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ananke.Domain", "src\Ananke.Domain\Ananke.Domain.csproj", "{D1608C2B-5B9A-4498-B27A-C9875D4C452E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ananke.Infrastructure", "src\Ananke.Infrastructure\Ananke.Infrastructure.csproj", "{BFA4E06A-B67B-4335-8065-5B3FC48F5912}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B150B59C-0F07-4952-BFE0-50EE9E53593E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ananke.Test.Application", "tests\Ananke.Test.Application\Ananke.Test.Application.csproj", "{EC1BBDC5-D232-400B-A695-26FD26907235}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ananke.Test.Infrastructure", "tests\Ananke.Test.Infrastructure\Ananke.Test.Infrastructure.csproj", "{A36610FA-3169-45EC-A80D-05F277AEFB90}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A2F68FD-A9F8-4564-B4C2-C0505C0DEDE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A2F68FD-A9F8-4564-B4C2-C0505C0DEDE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A2F68FD-A9F8-4564-B4C2-C0505C0DEDE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A2F68FD-A9F8-4564-B4C2-C0505C0DEDE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD58E28D-B27F-47D6-9C6A-34D03BB7B12A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD58E28D-B27F-47D6-9C6A-34D03BB7B12A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD58E28D-B27F-47D6-9C6A-34D03BB7B12A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD58E28D-B27F-47D6-9C6A-34D03BB7B12A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1608C2B-5B9A-4498-B27A-C9875D4C452E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1608C2B-5B9A-4498-B27A-C9875D4C452E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1608C2B-5B9A-4498-B27A-C9875D4C452E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1608C2B-5B9A-4498-B27A-C9875D4C452E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFA4E06A-B67B-4335-8065-5B3FC48F5912}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFA4E06A-B67B-4335-8065-5B3FC48F5912}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFA4E06A-B67B-4335-8065-5B3FC48F5912}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFA4E06A-B67B-4335-8065-5B3FC48F5912}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC1BBDC5-D232-400B-A695-26FD26907235}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC1BBDC5-D232-400B-A695-26FD26907235}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC1BBDC5-D232-400B-A695-26FD26907235}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC1BBDC5-D232-400B-A695-26FD26907235}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A36610FA-3169-45EC-A80D-05F277AEFB90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A36610FA-3169-45EC-A80D-05F277AEFB90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A36610FA-3169-45EC-A80D-05F277AEFB90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A36610FA-3169-45EC-A80D-05F277AEFB90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5A2F68FD-A9F8-4564-B4C2-C0505C0DEDE9} = {3597E562-F338-4E34-BD9B-821F19B8DADA}
+		{FD58E28D-B27F-47D6-9C6A-34D03BB7B12A} = {3597E562-F338-4E34-BD9B-821F19B8DADA}
+		{D1608C2B-5B9A-4498-B27A-C9875D4C452E} = {3597E562-F338-4E34-BD9B-821F19B8DADA}
+		{BFA4E06A-B67B-4335-8065-5B3FC48F5912} = {3597E562-F338-4E34-BD9B-821F19B8DADA}
+		{EC1BBDC5-D232-400B-A695-26FD26907235} = {B150B59C-0F07-4952-BFE0-50EE9E53593E}
+		{A36610FA-3169-45EC-A80D-05F277AEFB90} = {B150B59C-0F07-4952-BFE0-50EE9E53593E}
+	EndGlobalSection
+EndGlobal
