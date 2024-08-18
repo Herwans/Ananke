@@ -1,0 +1,6 @@
+@Ananke.Api_HostAddress = http://localhost:5070
+
+GET {{Ananke.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
