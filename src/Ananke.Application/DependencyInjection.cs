@@ -7,8 +7,11 @@ namespace Ananke.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddScoped<IItemService, ItemService>();
             services.AddScoped<IFileSystemService, FileSystemService>();
+            services.AddMediatR(configuration =>
+            {
+                configuration.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+            });
             return services;
         }
     }

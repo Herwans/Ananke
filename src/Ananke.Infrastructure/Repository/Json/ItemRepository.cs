@@ -27,6 +27,8 @@ namespace Ananke.Infrastructure.Repository.Json
 
         public void Add(Item item)
         {
+            int lastId = items.Max(item => item.Id) ?? 0;
+            item.Id = ++lastId;
             items.Add(item);
             Save();
         }

@@ -1,17 +1,19 @@
-using Ananke.Application.DTO;
+﻿using Ananke.Application.DTO;
 using Ananke.Application.Services;
 using Ananke.Domain.Entity;
 using Ananke.Infrastructure.Repository;
 using FluentAssertions;
-using Moq;
 using Moq.AutoMock;
+using Moq;
+using Ananke.Application.Features.Items.Commands;
+using Ananke.Application.Features.Items.Queries;
 
-namespace Ananke.Test.Application.Services
+namespace Ananke.Test.Application.Features.Items
 {
-    public class ItemServiceTest
+    public class Handlers
     {
         [Fact]
-        public void AddItem_ValidResult_Test()
+        public void AddItemCommand_ValidResult_Test()
         {
             // Arrange
             List<Item> items = [
@@ -28,10 +30,11 @@ namespace Ananke.Test.Application.Services
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
-            ItemService itemService = autoMocker.CreateInstance<ItemService>();
+            var handler = new AddItemCommandHandler(itemRepoMock.Object);
+            var command = new AddItemCommand(@"C:\g");
 
             // Act
-            itemService.AddItem(@"C:\g");
+            handler.Handle(command, CancellationToken.None);
 
             // Assert
             items.Should().HaveCount(7);
@@ -56,10 +59,11 @@ namespace Ananke.Test.Application.Services
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
-            ItemService itemService = autoMocker.CreateInstance<ItemService>();
+            var handler = new AddItemCommandHandler(itemRepoMock.Object);
+            var command = new AddItemCommand(@"C:\e");
 
             // Act
-            itemService.AddItem(@"C:\e");
+            handler.Handle(command, CancellationToken.None);
 
             // Assert
             items.Should().HaveCount(6);
@@ -81,10 +85,12 @@ namespace Ananke.Test.Application.Services
 
             var itemRepoMock = new Mock<IItemRepository>();
             itemRepoMock.Setup(repo => repo.AddAll(It.IsAny<IEnumerable<Item>>())).Callback<IEnumerable<Item>>(param => items.AddRange(param));
-            ItemService itemService = new ItemService(itemRepoMock.Object, directoryMock.Object);
+
+            var handler = new AddDirectoryCommandHandler(itemRepoMock.Object, directoryMock.Object);
+            var command = new AddDirectoryCommand(@"C:\");
 
             // Act
-            itemService.AddDirectory(@"C:\");
+            handler.Handle(command, CancellationToken.None);
 
             // Assert
             items.Should().HaveCount(2);
@@ -106,10 +112,12 @@ namespace Ananke.Test.Application.Services
             directoryMock.SetupSequence(dir => dir.GetDirectories(It.IsAny<string>())).Returns([@"C:\folder"]).Returns([]);
             var itemRepoMock = new Mock<IItemRepository>();
             itemRepoMock.Setup(repo => repo.AddAll(It.IsAny<IEnumerable<Item>>())).Callback<IEnumerable<Item>>(param => items.AddRange(param));
-            ItemService itemService = new ItemService(itemRepoMock.Object, directoryMock.Object);
+
+            var handler = new AddDirectoryCommandHandler(itemRepoMock.Object, directoryMock.Object);
+            var command = new AddDirectoryCommand(@"C:\", true);
 
             // Act
-            itemService.AddDirectory(@"C:\", true);
+            handler.Handle(command, CancellationToken.None);
 
             // Assert
             items.Should().HaveCount(3);
@@ -133,10 +141,12 @@ namespace Ananke.Test.Application.Services
             var itemRepoMock = new Mock<IItemRepository>();
             itemRepoMock.Setup(repo => repo.AddAll(It.IsAny<IEnumerable<Item>>())).Callback<IEnumerable<Item>>(param => items.AddRange(param));
             itemRepoMock.Setup(repo => repo.GetItems()).Returns(items);
-            ItemService itemService = new(itemRepoMock.Object, directoryMock.Object);
+
+            var handler = new AddDirectoryCommandHandler(itemRepoMock.Object, directoryMock.Object);
+            var command = new AddDirectoryCommand(@"C:\");
 
             // Act
-            itemService.AddDirectory(@"C:\");
+            handler.Handle(command, CancellationToken.None);
 
             // Assert
             items.Should().HaveCount(2);
@@ -155,10 +165,12 @@ namespace Ananke.Test.Application.Services
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
-            ItemService itemService = autoMocker.CreateInstance<ItemService>();
+
+            var handler = new GetItemsQueryHandler(itemRepoMock.Object);
+            var command = new GetItemsQuery();
 
             // Act
-            var results = itemService.GetItems();
+            var results = handler.Handle(command, CancellationToken.None).Result;
 
             // Assert
             results.Should().HaveCount(1);
@@ -183,10 +195,12 @@ namespace Ananke.Test.Application.Services
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
-            ItemService itemService = autoMocker.CreateInstance<ItemService>();
+
+            var handler = new DeleteItemByIdCommandHandler(itemRepoMock.Object);
+            var command = new DeleteItemByIdCommand(3);
 
             // Act
-            itemService.RemoveItem(3);
+            handler.Handle(command, CancellationToken.None);
 
             // Assert
             items.Should().HaveCount(5);
@@ -211,10 +225,12 @@ namespace Ananke.Test.Application.Services
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
-            ItemService itemService = autoMocker.CreateInstance<ItemService>();
+
+            var handler = new DeleteItemByIdCommandHandler(itemRepoMock.Object);
+            var command = new DeleteItemByIdCommand(3);
 
             // Act
-            itemService.RemoveItem(3);
+            handler.Handle(command, CancellationToken.None);
 
             // Assert
             items.Should().HaveCount(5);
@@ -231,10 +247,12 @@ namespace Ananke.Test.Application.Services
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
-            ItemService itemService = autoMocker.CreateInstance<ItemService>();
+
+            var handler = new GetItemByIdQueryHandler(itemRepoMock.Object);
+            var command = new GetItemByIdQuery(3);
 
             // Act
-            ItemDTO item = itemService.GetItem(3);
+            ItemDTO? item = handler.Handle(command, CancellationToken.None).Result;
 
             // Assert
             item.Should().NotBeNull();
@@ -250,10 +268,12 @@ namespace Ananke.Test.Application.Services
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
-            ItemService itemService = autoMocker.CreateInstance<ItemService>();
+
+            var handler = new GetItemByIdQueryHandler(itemRepoMock.Object);
+            var command = new GetItemByIdQuery(3);
 
             // Act
-            ItemDTO item = itemService.GetItem(3);
+            ItemDTO? item = handler.Handle(command, CancellationToken.None).Result;
 
             // Assert
             item.Should().BeNull();

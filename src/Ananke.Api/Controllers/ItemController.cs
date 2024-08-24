@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
-using Ananke.Application.Services;
-using Ananke.Api.Requests;
+using MediatR;
+using Ananke.Application.Features.Items.Commands;
+using Ananke.Application.Features.Items.Queries;
+using Ananke.Application.DTO;
 
 namespace Ananke.Api.Controllers
 {
@@ -8,43 +10,46 @@ namespace Ananke.Api.Controllers
     [Route("items")]
     public class ItemController : Controller
     {
-        private readonly IItemService _itemService;
+        private readonly ISender _sender;
 
-        public ItemController(IItemService itemService)
+        public ItemController(ISender sender)
         {
-            _itemService = itemService;
+            _sender = sender;
         }
 
         [HttpGet]
         public IActionResult Index()
         {
-            return new OkObjectResult(_itemService.GetItems());
+            return Ok(_sender.Send(new GetItemsQuery()).Result);
         }
 
         [HttpGet("{id}")]
         public IActionResult GetItem(int id)
         {
-            return new OkObjectResult(_itemService.GetItem(id));
+            ItemDTO? itemDTO = _sender.Send(new GetItemByIdQuery(id)).Result;
+            if (itemDTO == null)
+                return NotFound();
+            return Ok(itemDTO);
         }
 
         [HttpPost("add-item")]
-        public IActionResult AddItem([FromBody] AddItemRequest request)
+        public IActionResult AddItem(AddItemCommand command)
         {
-            _itemService.AddItem(request.Path);
+            _sender.Send(command);
             return Ok();
         }
 
         [HttpPost("add-directory")]
-        public IActionResult AddDirectory([FromBody] AddDirectoryRequest request)
+        public IActionResult AddDirectory(AddDirectoryCommand command)
         {
-            _itemService.AddDirectory(request.Path, request.Recursive);
+            _sender.Send(command);
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public IActionResult RemoveItem(int id)
+        public IActionResult RemoveItem(DeleteItemByIdCommand command)
         {
-            _itemService.RemoveItem(id);
+            _sender.Send(command);
             return Ok();
         }
     }
