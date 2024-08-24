@@ -35,6 +35,8 @@ namespace Ananke.Infrastructure.Repository.Json
 
         public void AddAll(IEnumerable<Item> items)
         {
+            int lastId = items.Max(item => item.Id) ?? 0;
+            items.Select(item => item.Id = ++lastId).ToList();
             this.items.AddRange(items);
             Save();
         }
