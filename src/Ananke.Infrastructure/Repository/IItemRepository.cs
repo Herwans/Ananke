@@ -4,7 +4,7 @@ namespace Ananke.Infrastructure.Repository
 {
     public interface IItemRepository
     {
-        IEnumerable<Item> GetItems();
+        IEnumerable<Item> GetAll();
 
         void Add(Item item);
 
@@ -12,6 +12,6 @@ namespace Ananke.Infrastructure.Repository
 
         void RemoveById(int id);
 
-        Item? GetItemById(int id);
+        Item? GetById(int id);
     }
 }

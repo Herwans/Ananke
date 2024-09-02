@@ -1,4 +1,5 @@
-﻿using Ananke.Application.Services;
+﻿using Ananke.Application.Mappers;
+using Ananke.Application.Services;
 using Ananke.Domain.Entity;
 using Ananke.Infrastructure.Repository;
 using MediatR;
@@ -27,15 +28,12 @@ namespace Ananke.Application.Features.Items.Commands
         public void ProcessDirectory(string parentDirectory, bool recursive)
         {
             List<Item> items = [];
-            IEnumerable<Item> current = _itemRepository.GetItems();
+            IEnumerable<Item> current = _itemRepository.GetAll();
             foreach (string file in _fileSystemService.GetFiles(parentDirectory))
             {
                 if (current.Any(x => x.Path == file)) { continue; }
 
-                Item item = new()
-                {
-                    Path = file
-                };
+                Item item = ItemMapper.ToEntity(file);
                 items.Add(item);
             }
 
