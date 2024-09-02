@@ -1,6 +1,7 @@
 using Ananke.Application;
 
 var builder = WebApplication.CreateBuilder(args);
+var AnankePolicy = "_anankePolicy";
 
 // Add services to the container.
 
@@ -10,6 +11,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
+
+builder.Services.AddCors(options =>
+    options.AddPolicy(AnankePolicy, policy =>
+    {
+        policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+    })
+);
 
 var app = builder.Build();
 
@@ -23,6 +31,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCors(AnankePolicy);
 
 app.MapControllers();
 
