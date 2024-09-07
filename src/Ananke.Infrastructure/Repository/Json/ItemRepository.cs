@@ -5,26 +5,27 @@ namespace Ananke.Infrastructure.Repository.Json
 {
     public class ItemRepository : IItemRepository
     {
-        private const string FILE = @"H:\Item.json";
+        private readonly string _file;
         private readonly List<Item> _items;
         private readonly IExtensionRepository _extensionRepository;
 
-        public ItemRepository(IExtensionRepository extensionRepository)
+        public ItemRepository(string file, IExtensionRepository extensionRepository)
         {
-            if (!File.Exists(FILE))
+            _file = file;
+            if (!File.Exists(file))
             {
                 _items = [];
             }
             else
             {
-                _items = JsonConvert.DeserializeObject<List<Item>>(File.ReadAllText(FILE));
+                _items = JsonConvert.DeserializeObject<List<Item>>(File.ReadAllText(_file));
             }
             _extensionRepository = extensionRepository;
         }
 
         private void Save()
         {
-            File.WriteAllText(FILE, JsonConvert.SerializeObject(_items));
+            File.WriteAllText(_file, JsonConvert.SerializeObject(_items));
         }
 
         public void Add(Item item)
