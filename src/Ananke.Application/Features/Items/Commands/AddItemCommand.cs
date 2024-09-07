@@ -1,4 +1,5 @@
-﻿using Ananke.Domain.Entity;
+﻿using Ananke.Application.Mappers;
+using Ananke.Domain.Entity;
 using Ananke.Infrastructure.Repository;
 using MediatR;
 
@@ -17,12 +18,9 @@ namespace Ananke.Application.Features.Items.Commands
 
         public Task Handle(AddItemCommand request, CancellationToken cancellationToken)
         {
-            if (!_itemRepository.GetItems().Any(x => x.Path == request.Path))
+            if (!_itemRepository.GetAll().Any(x => x.Path == request.Path))
             {
-                Item item = new()
-                {
-                    Path = request.Path
-                };
+                Item item = ItemMapper.ToEntity(request.Path);
                 _itemRepository.Add(item);
             }
 

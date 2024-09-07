@@ -19,7 +19,7 @@ namespace Ananke.Application.Features.Items.Queries
 
         public Task<ItemDTO?> Handle(GetItemByIdQuery request, CancellationToken cancellationToken)
         {
-            Item? item = _itemRepository.GetItemById(request.Id);
+            Item? item = _itemRepository.GetById(request.Id);
             return Task.FromResult(item == null ? null : ItemMapper.ToDTO(item));
         }
     }

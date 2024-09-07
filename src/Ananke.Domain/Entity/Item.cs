@@ -1,8 +1,10 @@
 namespace Ananke.Domain.Entity
 {
-    public class Item
+    public record Item : BaseEntity
     {
-        public int? Id { get; set; }
         public string? Path { get; set; }
+        public string? Directory { get; set; }
+        public string? Name { get; set; }
+        public int? Extension { get; set; }
     }
 }

@@ -9,6 +9,7 @@ namespace Ananke.Application
         public static IServiceCollection AddInfrastructure(this IServiceCollection services)
         {
             services.AddScoped<IItemRepository, ItemRepository>();
+            services.AddScoped<IExtensionRepository, ExtensionRepository>();
             return services;
         }
     }
