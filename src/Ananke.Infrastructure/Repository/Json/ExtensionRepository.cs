@@ -5,28 +5,31 @@ namespace Ananke.Infrastructure.Repository.Json
 {
     public class ExtensionRepository : IExtensionRepository
     {
-        private const string FILE = @"H:\Extension.json";
+        private readonly string _file;
         private readonly List<Extension> _extensions;
 
-        public ExtensionRepository()
+        public ExtensionRepository(string file)
         {
-            if (!File.Exists(FILE))
+            _file = file;
+            if (!File.Exists(_file))
             {
                 _extensions = [];
             }
             else
             {
-                _extensions = JsonConvert.DeserializeObject<List<Extension>>(File.ReadAllText(FILE));
+                _extensions = JsonConvert.DeserializeObject<List<Extension>>(File.ReadAllText(_file));
             }
         }
 
         private void Save()
         {
-            File.WriteAllText(FILE, JsonConvert.SerializeObject(_extensions));
+            Directory.CreateDirectory(Path.GetDirectoryName(_file));
+            File.WriteAllText(_file, JsonConvert.SerializeObject(_extensions));
         }
 
         public void Add(string extension)
         {
+            if (_extensions.Find(ext => ext.Name == extension) != null) return;
             int lastId = _extensions.Max(extension => extension.Id) ?? 0;
             Extension ext = new()
             {
