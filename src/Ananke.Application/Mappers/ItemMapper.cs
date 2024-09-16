@@ -15,30 +15,16 @@ namespace Ananke.Application.Mappers
 
         public static Item ToEntity(ItemDTO item)
         {
-            return new()
-            {
-                Path = item.Path,
-            };
+            return ToEntity(item.Path);
         }
 
         public static Item ToEntity(string path)
         {
-            Item item = new()
-            {
-                Path = path,
-                Directory = Path.GetDirectoryName(path),
-                Name = Path.GetFileNameWithoutExtension(path),
-            };
+            Folder folder = new() { Path = Path.GetDirectoryName(path), Name = Path.GetFileName(Path.GetDirectoryName(path)) };
+            Extension extension = new() { Name = Path.GetExtension(path).Trim('.').ToLower() };
+            Item item = new() { Extension = extension, Folder = folder, Name = Path.GetFileNameWithoutExtension(path) };
 
             return item;
-        }
-
-        private static Extension? GetExtension(string path)
-        {
-            string? extension = Path.GetExtension(path);
-            if (extension == null || extension == string.Empty) { return null; }
-            extension = extension.Trim('.');
-            return extension == null ? null : new() { Name = extension };
         }
     }
 }

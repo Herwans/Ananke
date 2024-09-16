@@ -41,13 +41,11 @@ namespace Ananke.Test.Application.Features.Items.Commands
         [Fact]
         public void RemoveItem_DoesntExist_Test()
         {
+            Folder folder = new() { Name = "C:\\" };
+
             // Arrange
             List<Item> items = [
-                new() { Id = 1, Path = @"C:\a" },
-                new() { Id = 2, Path = @"C:\b" },
-                new() { Id = 4, Path = @"C:\d" },
-                new() { Id = 5, Path = @"C:\e" },
-                new() { Id = 6, Path = @"C:\f" }
+                new() { Id = 1, },
             ];
 
             Mock<IItemRepository> itemRepoMock = new();
@@ -64,7 +62,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
 
             // Assert
             items.Should().HaveCount(5);
-            items.Should().NotContainEquivalentOf(new Item { Path = @"C:\c", Directory = @"C:\", Name = "c", Extension = null });
+            items.Should().NotContainEquivalentOf(new Item { Folder = folder, Name = "c", Extension = null });
             items.Find(item => item.Id == 3).Should().BeNull();
         }
     }

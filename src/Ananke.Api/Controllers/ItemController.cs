@@ -47,9 +47,9 @@ namespace Ananke.Api.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult RemoveItem(DeleteItemByIdCommand command)
+        public IActionResult RemoveItem(int id)
         {
-            _sender.Send(command);
+            _sender.Send(new DeleteItemByIdCommand(id));
             return Ok();
         }
     }
