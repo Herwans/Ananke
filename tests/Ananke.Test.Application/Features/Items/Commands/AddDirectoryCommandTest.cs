@@ -22,7 +22,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
                 ]);
 
             var itemRepoMock = new Mock<IItemRepository>();
-            itemRepoMock.Setup(repo => repo.AddAll(It.IsAny<IEnumerable<Item>>())).Callback<IEnumerable<Item>>(param => items.AddRange(param));
+            itemRepoMock.Setup(repo => repo.AddAllAsync(It.IsAny<IEnumerable<Item>>())).Callback<IEnumerable<Item>>(param => items.AddRange(param));
 
             var handler = new AddDirectoryCommandHandler(itemRepoMock.Object, directoryMock.Object);
             var command = new AddDirectoryCommand(@"C:\");
@@ -51,15 +51,15 @@ namespace Ananke.Test.Application.Features.Items.Commands
 
             Mock<IItemRepository> itemRepoMock = new();
             Mock<IExtensionRepository> extensionRepoMock = new();
-            extensionRepoMock.Setup(repo => repo.GetByName(It.IsAny<string>())).Returns(extension);
+            extensionRepoMock.Setup(repo => repo.GetByNameAsync(It.IsAny<string>())).Returns(extension);
 
-            itemRepoMock.Setup(repo => repo.AddAll(It.IsAny<IEnumerable<Item>>())).Callback<IEnumerable<Item>>(pars =>
+            itemRepoMock.Setup(repo => repo.AddAllAsync(It.IsAny<IEnumerable<Item>>())).Callback<IEnumerable<Item>>(pars =>
             {
                 foreach (Item param in pars)
                 {
                     if (param.Path.EndsWith(".txt"))
                     {
-                        param.Extension = extensionRepoMock.Object.GetByName("txt");
+                        param.Extension = extensionRepoMock.Object.GetByNameAsync("txt");
                     }
                 }
                 items.AddRange(pars);
@@ -92,7 +92,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
                 ]);
 
             var itemRepoMock = new Mock<IItemRepository>();
-            itemRepoMock.Setup(repo => repo.AddAll(It.IsAny<IEnumerable<Item>>())).Callback<IEnumerable<Item>>(param => items.AddRange(param));
+            itemRepoMock.Setup(repo => repo.AddAllAsync(It.IsAny<IEnumerable<Item>>())).Callback<IEnumerable<Item>>(param => items.AddRange(param));
             itemRepoMock.Setup(repo => repo.GetAll()).Returns(items);
 
             var handler = new AddDirectoryCommandHandler(itemRepoMock.Object, directoryMock.Object);

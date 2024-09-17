@@ -19,7 +19,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
             ];
 
             Mock<IItemRepository> itemRepoMock = new();
-            itemRepoMock.Setup(repo => repo.RemoveById(It.IsAny<int>())).Callback<int>(id => items.Remove(items.Find(i => i.Id == id)));
+            itemRepoMock.Setup(repo => repo.RemoveByIdAsync(It.IsAny<int>())).Callback<int>(id => items.Remove(items.Find(i => i.Id == id)));
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
@@ -49,7 +49,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
             ];
 
             Mock<IItemRepository> itemRepoMock = new();
-            itemRepoMock.Setup(repo => repo.RemoveById(It.IsAny<int>())).Callback<int>(id => items.Remove(items.Find(i => i.Id == id)));
+            itemRepoMock.Setup(repo => repo.RemoveByIdAsync(It.IsAny<int>())).Callback<int>(id => items.Remove(items.Find(i => i.Id == id)));
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);

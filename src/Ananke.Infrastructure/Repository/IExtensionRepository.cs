@@ -4,8 +4,8 @@ namespace Ananke.Infrastructure.Repository
 {
     public interface IExtensionRepository
     {
-        void Add(string extension);
+        Task AddAsync(string extension, CancellationToken cancellationToken = default);
 
-        Extension? GetByName(string name);
+        Task<Extension?> GetByNameAsync(string name, CancellationToken cancellationToken = default);
     }
 }

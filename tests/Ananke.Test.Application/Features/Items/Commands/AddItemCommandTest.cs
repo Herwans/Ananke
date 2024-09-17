@@ -16,7 +16,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
             List<Item> items = [];
 
             Mock<IItemRepository> itemRepoMock = new();
-            itemRepoMock.Setup(repo => repo.Add(It.IsAny<Item>())).Callback<Item>(items.Add);
+            itemRepoMock.Setup(repo => repo.AddAsync(It.IsAny<Item>())).Callback<Item>(items.Add);
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
@@ -38,7 +38,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
             List<Item> items = [item1, item2];
 
             Mock<IItemRepository> itemRepoMock = new();
-            itemRepoMock.Setup(repo => repo.Add(It.IsAny<Item>())).Callback<Item>(items.Add);
+            itemRepoMock.Setup(repo => repo.AddAsync(It.IsAny<Item>())).Callback<Item>(items.Add);
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
@@ -61,12 +61,12 @@ namespace Ananke.Test.Application.Features.Items.Commands
 
             Mock<IItemRepository> itemRepoMock = new();
             Mock<IExtensionRepository> extensionRepoMock = new();
-            itemRepoMock.Setup(repo => repo.Add(It.IsAny<Item>())).Callback<Item>(item =>
+            itemRepoMock.Setup(repo => repo.AddAsync(It.IsAny<Item>())).Callback<Item>(item =>
             {
-                //item.Extension = extensionRepoMock.Object.GetByName("txt").Id;
+                //item.Extension = extensionRepoMock.Object.GetByNameAsync("txt").Id;
                 items.Add(item);
             });
-            extensionRepoMock.Setup(repo => repo.GetByName(It.IsAny<string>())).Returns(extension);
+            extensionRepoMock.Setup(repo => repo.GetByNameAsync(It.IsAny<string>())).Returns(extension);
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
@@ -90,7 +90,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
             ];
             Mock<IItemRepository> itemRepoMock = new();
             itemRepoMock.Setup(repo => repo.GetAll()).Returns(items);
-            itemRepoMock.Setup(repo => repo.Add(It.IsAny<Item>())).Callback<Item>(item => items.Add(item));
+            itemRepoMock.Setup(repo => repo.AddAsync(It.IsAny<Item>())).Callback<Item>(item => items.Add(item));
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);

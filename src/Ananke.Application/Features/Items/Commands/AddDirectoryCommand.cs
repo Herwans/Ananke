@@ -19,30 +19,40 @@ namespace Ananke.Application.Features.Items.Commands
             _fileSystemService = fileSystemService;
         }
 
-        public Task Handle(AddDirectoryCommand request, CancellationToken cancellationToken)
+        public async Task Handle(AddDirectoryCommand request, CancellationToken cancellationToken = default)
         {
-            ProcessDirectory(request.Path, request.Recursive);
-            return Task.CompletedTask;
+            cancellationToken.ThrowIfCancellationRequested();
+            await ProcessDirectoryAsync(request.Path, request.Recursive, cancellationToken);
         }
 
-        public void ProcessDirectory(string parentDirectory, bool recursive)
+        public async Task ProcessDirectoryAsync(
+            string parentDirectory,
+            bool recursive,
+            CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
+
             List<Item> items = [];
-            IEnumerable<Item> current = _itemRepository.GetAll();
+            IEnumerable<Item> current = await _itemRepository.GetAllAsync(cancellationToken);
             foreach (string file in _fileSystemService.GetFiles(parentDirectory))
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 if (current.Any(x => x.Path == file)) { continue; }
 
                 Item item = ItemMapper.ToEntity(file);
                 items.Add(item);
             }
 
-            _itemRepository.AddAll(items);
+            await _itemRepository.AddAllAsync(items, cancellationToken);
 
             if (recursive)
             {
                 foreach (string directory in _fileSystemService.GetDirectories(parentDirectory))
-                    ProcessDirectory(directory, recursive);
+                {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    await ProcessDirectoryAsync(directory, recursive, cancellationToken);
+                }
             }
         }
     }

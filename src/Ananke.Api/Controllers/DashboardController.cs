@@ -1,5 +1,4 @@
 ﻿using Ananke.Application.Features.Dashboard.Queries;
-using Ananke.Application.Features.Items.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,9 +16,9 @@ namespace Ananke.Api.Controllers
         }
 
         [HttpGet("disks-usage")]
-        public IActionResult DisksUsage()
+        public async Task<IActionResult> DisksUsage(CancellationToken cancellationToken)
         {
-            return Ok(_sender.Send(new GetDisksUsageQuery()).Result);
+            return Ok(_sender.Send(new GetDisksUsageQuery(), cancellationToken));
         }
     }
 }

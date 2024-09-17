@@ -16,9 +16,9 @@ namespace Ananke.Application.Features.Items.Queries
             _itemRepository = itemRepository;
         }
 
-        public Task<IEnumerable<ItemDTO>> Handle(GetItemsQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<ItemDTO>> Handle(GetItemsQuery request, CancellationToken cancellationToken)
         {
-            return Task.FromResult(_itemRepository.GetAll().Select(ItemMapper.ToDTO));
+            return (await _itemRepository.GetAllAsync(cancellationToken)).Select(ItemMapper.ToDTO);
         }
     }
 }

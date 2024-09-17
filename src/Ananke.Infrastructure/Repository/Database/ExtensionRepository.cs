@@ -1,4 +1,5 @@
 ﻿using Ananke.Domain.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ananke.Infrastructure.Repository.Database
 {
@@ -6,14 +7,15 @@ namespace Ananke.Infrastructure.Repository.Database
     {
         private readonly AnankeContext _context = context;
 
-        public void Add(string extension)
+        public async Task AddAsync(string extension, CancellationToken cancellationToken = default)
         {
-            _context.Extensions.Add(new() { Name = extension.ToLower() });
+            await _context.Extensions.AddAsync(new() { Name = extension.ToLower() }, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public Extension? GetByName(string name)
+        public async Task<Extension?> GetByNameAsync(string name, CancellationToken cancellationToken = default)
         {
-            return _context.Extensions.First(ext => ext.Name == name);
+            return await _context.Extensions.FirstAsync(ext => ext.Name == name);
         }
     }
 }

@@ -4,14 +4,14 @@ namespace Ananke.Infrastructure.Repository
 {
     public interface IItemRepository
     {
-        IEnumerable<Item> GetAll();
+        Task<IEnumerable<Item>> GetAllAsync(CancellationToken cancellationToken = default);
 
-        void Add(Item item);
+        Task AddAsync(Item item, CancellationToken cancellationToken = default);
 
-        void AddAll(IEnumerable<Item> items);
+        Task AddAllAsync(IEnumerable<Item> items, CancellationToken cancellationToken = default);
 
-        void RemoveById(int id);
+        Task RemoveByIdAsync(int id, CancellationToken cancellationToken = default);
 
-        Item? GetById(int id);
+        Task<Item?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
     }
 }

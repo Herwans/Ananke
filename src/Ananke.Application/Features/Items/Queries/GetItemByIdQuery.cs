@@ -17,10 +17,10 @@ namespace Ananke.Application.Features.Items.Queries
             _itemRepository = itemRepository;
         }
 
-        public Task<ItemDTO?> Handle(GetItemByIdQuery request, CancellationToken cancellationToken)
+        public async Task<ItemDTO?> Handle(GetItemByIdQuery request, CancellationToken cancellationToken = default)
         {
-            Item? item = _itemRepository.GetById(request.Id);
-            return Task.FromResult(item == null ? null : ItemMapper.ToDTO(item));
+            Item? item = await _itemRepository.GetByIdAsync(request.Id, cancellationToken);
+            return item == null ? null : ItemMapper.ToDTO(item);
         }
     }
 }
