@@ -18,12 +18,26 @@
 
         public string[] GetDirectories(string path)
         {
-            return Directory.GetDirectories(path);
+            try
+            {
+                return Directory.GetDirectories(path);
+            }
+            catch
+            {
+                return [];
+            }
         }
 
         public string[] GetFiles(string path)
         {
-            return Directory.GetFiles(path);
+            try
+            {
+                return Directory.GetFiles(path);
+            }
+            catch
+            {
+                return [];
+            }
         }
     }
 }
