@@ -59,7 +59,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
                 {
                     if (param.Path.EndsWith(".txt"))
                     {
-                        param.Extension = extensionRepoMock.Object.GetByName("txt").Id;
+                        param.Extension = extensionRepoMock.Object.GetByName("txt");
                     }
                 }
                 items.AddRange(pars);
@@ -81,8 +81,9 @@ namespace Ananke.Test.Application.Features.Items.Commands
         [Fact]
         public void AddDirectory_AlreadyExists_Test()
         {
+            Folder folder = new() { Name = "C:\\" };
             // Arrange
-            List<Item> items = [new() { Path = @"C:\a", Directory = @"C:\", Name = "a", Extension = null }];
+            List<Item> items = [new() { Folder = folder, Name = "a", Extension = null }];
 
             var directoryMock = new Mock<IFileSystemService>();
             directoryMock.Setup(dir => dir.GetFiles(It.IsAny<string>())).Returns([
@@ -102,8 +103,8 @@ namespace Ananke.Test.Application.Features.Items.Commands
 
             // Assert
             items.Should().HaveCount(2);
-            items.Should().ContainEquivalentOf(new Item { Path = @"C:\a", Directory = @"C:\", Name = "a", Extension = null });
-            items.Should().ContainEquivalentOf(new Item { Path = @"C:\b", Directory = @"C:\", Name = "b", Extension = null });
+            items.Should().ContainEquivalentOf(new Item { Folder = folder, Name = "a", Extension = null });
+            items.Should().ContainEquivalentOf(new Item { Folder = folder, Name = "b", Extension = null });
         }
     }
 }

@@ -1,7 +1,13 @@
-﻿namespace Ananke.Domain.Entity
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Ananke.Domain.Entity
 {
     public record Extension : BaseEntity
     {
-        public string Name { get; set; }
+        [Required]
+        public string? Name { get; set; }
+        public ICollection<Item>? Items { get; set; }
+        public ExtensionType? Type { get; set; }
+        public int? TypeId { get; set; }
     }
 }

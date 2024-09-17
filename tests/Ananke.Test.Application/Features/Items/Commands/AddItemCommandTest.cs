@@ -63,7 +63,7 @@ namespace Ananke.Test.Application.Features.Items.Commands
             Mock<IExtensionRepository> extensionRepoMock = new();
             itemRepoMock.Setup(repo => repo.Add(It.IsAny<Item>())).Callback<Item>(item =>
             {
-                item.Extension = extensionRepoMock.Object.GetByName("txt").Id;
+                //item.Extension = extensionRepoMock.Object.GetByName("txt").Id;
                 items.Add(item);
             });
             extensionRepoMock.Setup(repo => repo.GetByName(It.IsAny<string>())).Returns(extension);
