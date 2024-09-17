@@ -2,7 +2,6 @@ using Ananke.Application;
 
 var builder = WebApplication.CreateBuilder(args);
 var AnankePolicy = "_anankePolicy";
-
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -10,7 +9,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure();
+builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 if (builder.Environment.IsDevelopment())
 {
