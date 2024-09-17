@@ -12,7 +12,7 @@ namespace Ananke.Infrastructure.Repository.Database
             _context = context;
         }
 
-        public void Add(Item item)
+        public async Task AddAsync(Item item, CancellationToken cancellationToken = default)
         {
             Extension? extension = _context.Extensions.FirstOrDefault(ext => ext.Name == item.Extension.Name);
             if (extension != null)
@@ -26,24 +26,28 @@ namespace Ananke.Infrastructure.Repository.Database
                 item.Folder = folder;
             }
 
-            _context.Items.Add(item);
-            _context.SaveChanges();
+            await _context.Items.AddAsync(item, cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public void AddAll(IEnumerable<Item> items)
+        public async Task AddAllAsync(IEnumerable<Item> items, CancellationToken cancellationToken = default)
         {
-            var extensions = _context.Extensions.ToDictionary(e => e.Name);
-            var folders = _context.Folders.ToDictionary(f => f.Path);
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var extensions = await _context.Extensions.ToDictionaryAsync(e => e.Name, cancellationToken);
+            var folders = await _context.Folders.ToDictionaryAsync(f => f.Path, cancellationToken);
 
             foreach (var item in items)
             {
+                cancellationToken.ThrowIfCancellationRequested();
+
                 if (extensions.TryGetValue(item.Extension.Name, out var extension))
                 {
                     item.Extension = extension;
                 }
                 else
                 {
-                    _context.Extensions.Add(item.Extension);
+                    await _context.Extensions.AddAsync(item.Extension, cancellationToken);
                     extensions.Add(item.Extension.Name, item.Extension);
                 }
 
@@ -53,35 +57,39 @@ namespace Ananke.Infrastructure.Repository.Database
                 }
                 else
                 {
-                    _context.Folders.Add(item.Folder);
+                    await _context.Folders.AddAsync(item.Folder, cancellationToken);
                     folders.Add(item.Folder.Path, item.Folder);
                 }
 
-                _context.Items.Add(item);
+                await _context.Items.AddAsync(item, cancellationToken);
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync(cancellationToken);
         }
 
-        public IEnumerable<Item> GetAll()
+        public async Task<IEnumerable<Item>> GetAllAsync(CancellationToken cancellationToken = default)
         {
-            return _context.Set<Item>()
+            return await _context.Set<Item>()
                 .Include(item => item.Folder)
                 .Include(item => item.Extension)
-                .ToList();
+                .ToListAsync(cancellationToken);
         }
 
-        public Item? GetById(int id)
+        public async Task<Item?> GetByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            return _context.Set<Item>()
+            return await _context.Set<Item>()
                 .Include(item => item.Folder)
                 .Include(item => item.Extension)
-                .First(item => item.Id == id);
+                .FirstAsync(item => item.Id == id, cancellationToken);
         }
 
-        public void RemoveById(int id)
+        public async Task RemoveByIdAsync(int id, CancellationToken cancellationToken = default)
         {
-            _context.Items.Remove(GetById(id));
-            _context.SaveChanges();
+            var item = await GetByIdAsync(id, cancellationToken);
+            if (item != null)
+            {
+                _context.Items.Remove(item);
+                await _context.SaveChangesAsync(cancellationToken);
+            }
         }
     }
 }

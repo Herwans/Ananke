@@ -16,15 +16,14 @@ namespace Ananke.Application.Features.Items.Commands
             _itemRepository = itemRepository;
         }
 
-        public Task Handle(AddItemCommand request, CancellationToken cancellationToken)
+        public async Task Handle(AddItemCommand request, CancellationToken cancellationToken)
         {
-            if (!_itemRepository.GetAll().Any(x => x.Path == request.Path))
+            IEnumerable<Item> items = await _itemRepository.GetAllAsync(cancellationToken);
+            if (!items.Any(x => x.Path == request.Path))
             {
                 Item item = ItemMapper.ToEntity(request.Path);
-                _itemRepository.Add(item);
+                await _itemRepository.AddAsync(item, cancellationToken);
             }
-
-            return Task.CompletedTask;
         }
     }
 }

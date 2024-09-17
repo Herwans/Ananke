@@ -8,12 +8,13 @@ namespace Ananke.Application.Features.Dashboard.Queries
 
     public class GetDisksUsageQueryHandler : IRequestHandler<GetDisksUsageQuery, IEnumerable<DiskDTO>>
     {
-        public Task<IEnumerable<DiskDTO>> Handle(GetDisksUsageQuery request, CancellationToken cancellationToken)
+        public Task<IEnumerable<DiskDTO>> Handle(GetDisksUsageQuery request, CancellationToken cancellationToken = default)
         {
             IEnumerable<DiskDTO> result = [];
 
             foreach (DriveInfo drive in DriveInfo.GetDrives())
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 result = result.Append(new()
                 {
                     Name = drive.Name,

@@ -14,10 +14,9 @@ namespace Ananke.Application.Features.Items.Commands
             _itemRepository = itemRepository;
         }
 
-        public Task Handle(DeleteItemByIdCommand request, CancellationToken cancellationToken)
+        public async Task Handle(DeleteItemByIdCommand request, CancellationToken cancellationToken)
         {
-            _itemRepository.RemoveById(request.Id);
-            return Task.CompletedTask;
+            await _itemRepository.RemoveByIdAsync(request.Id, cancellationToken);
         }
     }
 }

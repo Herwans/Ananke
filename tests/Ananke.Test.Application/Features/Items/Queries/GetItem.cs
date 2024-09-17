@@ -15,7 +15,7 @@ namespace Ananke.Test.Application.Features.Items.Queries
         {
             // Arrange
             Mock<IItemRepository> itemRepoMock = new();
-            itemRepoMock.Setup(repo => repo.GetById(It.IsAny<int>())).Returns(new Item() { Id = 3, Folder = folder, Name = "c", Extension = null });
+            itemRepoMock.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).Returns(new Item() { Id = 3, Folder = folder, Name = "c", Extension = null });
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
@@ -36,7 +36,7 @@ namespace Ananke.Test.Application.Features.Items.Queries
         {
             // Arrange
             Mock<IItemRepository> itemRepoMock = new();
-            itemRepoMock.Setup(repo => repo.GetById(It.IsAny<int>())).Returns<Item?>(null);
+            itemRepoMock.Setup(repo => repo.GetByIdAsync(It.IsAny<int>())).Returns<Item?>(null);
 
             AutoMocker autoMocker = new();
             autoMocker.Use(itemRepoMock.Object);
