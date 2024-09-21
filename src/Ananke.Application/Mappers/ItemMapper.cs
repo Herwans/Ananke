@@ -9,7 +9,11 @@ namespace Ananke.Application.Mappers
         {
             return new()
             {
-                Path = item.Path
+                Path = item.Path,
+                Name = item.Name,
+                Directory = item.Folder.Name,
+                Extension = item.Extension.Name,
+                AddedAt = new()
             };
         }
 

@@ -6,6 +6,8 @@ namespace Ananke.Infrastructure.Repository
     {
         Task<IEnumerable<Item>> GetAllAsync(CancellationToken cancellationToken = default);
 
+        Task<IEnumerable<Item>> GetAllLastAsync(int limit = 10, CancellationToken cancellationToken = default);
+
         Task AddAsync(Item item, CancellationToken cancellationToken = default);
 
         Task AddAllAsync(IEnumerable<Item> items, CancellationToken cancellationToken = default);
@@ -13,5 +15,6 @@ namespace Ananke.Infrastructure.Repository
         Task RemoveByIdAsync(int id, CancellationToken cancellationToken = default);
 
         Task<Item?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<int> CountAsync(CancellationToken cancellationToken);
     }
 }

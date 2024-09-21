@@ -29,5 +29,33 @@ namespace Ananke.Api.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("files-last")]
+        public async Task<IActionResult> FilesLast(CancellationToken cancellationToken)
+        {
+            Task<ItemDTO[]> task = _sender.Send(new GetLastFilesQuery(), cancellationToken);
+            ItemDTO[] result = await task;
+
+            if (task.IsCanceled)
+            {
+                return StatusCode(StatusCodes.Status499ClientClosedRequest, "Request was cancelled.");
+            }
+
+            return Ok(result);
+        }
+
+        [HttpGet("files-count")]
+        public async Task<IActionResult> FilesCount(CancellationToken cancellationToken)
+        {
+            Task<int> task = _sender.Send(new CountFilesQuery(), cancellationToken);
+            int result = await task;
+
+            if (task.IsCanceled)
+            {
+                return StatusCode(StatusCodes.Status499ClientClosedRequest, "Request was cancelled.");
+            }
+
+            return Ok(result);
+        }
     }
 }
