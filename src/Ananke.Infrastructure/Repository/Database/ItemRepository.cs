@@ -1,5 +1,6 @@
 ﻿using Ananke.Domain.Entity;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Ananke.Infrastructure.Repository.Database
 {
@@ -90,6 +91,21 @@ namespace Ananke.Infrastructure.Repository.Database
                 _context.Items.Remove(item);
                 await _context.SaveChangesAsync(cancellationToken);
             }
+        }
+
+        public async Task<IEnumerable<Item>> GetAllLastAsync(int limit = 10, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Item>()
+                .OrderByDescending(item => item.Id)
+                .Take(limit)
+                .Include(item => item.Folder)
+                .Include(item => item.Extension)
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<int> CountAsync(CancellationToken cancellationToken)
+        {
+            return await _context.Set<Item>().CountAsync(cancellationToken);
         }
     }
 }
