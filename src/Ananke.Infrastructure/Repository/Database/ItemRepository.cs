@@ -107,5 +107,16 @@ namespace Ananke.Infrastructure.Repository.Database
         {
             return await _context.Set<Item>().CountAsync(cancellationToken);
         }
+
+        public async Task<IEnumerable<Item>> GetByExtensionsAsync(string[] extensions, int page = 1, int size = 10, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Item>()
+                .Include(item => item.Folder)
+                .Include(item => item.Extension)
+                .Where(i => extensions.Contains(i.Extension.Name))
+                .Take(size)
+                .Skip(size * (page - 1))
+                .ToListAsync(cancellationToken);
+        }
     }
 }

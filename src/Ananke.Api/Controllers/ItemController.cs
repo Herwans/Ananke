@@ -3,6 +3,7 @@ using MediatR;
 using Ananke.Application.Features.Items.Commands;
 using Ananke.Application.Features.Items.Queries;
 using Ananke.Application.DTO;
+using System.Drawing;
 
 namespace Ananke.Api.Controllers
 {
@@ -21,6 +22,12 @@ namespace Ananke.Api.Controllers
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {
             return Ok(await _sender.Send(new GetItemsQuery(), cancellationToken));
+        }
+
+        [HttpGet("type")]
+        public async Task<IActionResult> GetItemsByType(string type, int page = 1, int size = 10, CancellationToken cancellationToken = default)
+        {
+            return Ok(await _sender.Send(new GetItemsByTypeQuery(type, page, size), cancellationToken));
         }
 
         [HttpGet("{id}")]

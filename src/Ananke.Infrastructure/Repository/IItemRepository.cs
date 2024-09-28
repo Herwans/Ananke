@@ -15,6 +15,9 @@ namespace Ananke.Infrastructure.Repository
         Task RemoveByIdAsync(int id, CancellationToken cancellationToken = default);
 
         Task<Item?> GetByIdAsync(int id, CancellationToken cancellationToken = default);
+
         Task<int> CountAsync(CancellationToken cancellationToken);
+
+        Task<IEnumerable<Item>> GetByExtensionsAsync(string[] extensions, int page = 1, int size = 10, CancellationToken cancellationToken = default);
     }
 }

@@ -14,7 +14,7 @@ namespace Ananke.Domain.Entity
         {
             get
             {
-                return Folder.Path + Name + (Extension == null ? "" : "." + Extension.Name);
+                return System.IO.Path.Combine(Folder.Path, Name + (Extension == null ? "" : "." + Extension.Name));
             }
         }
     }
