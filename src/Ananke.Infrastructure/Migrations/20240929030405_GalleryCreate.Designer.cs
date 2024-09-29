@@ -3,6 +3,7 @@ using System;
 using Ananke.Infrastructure.Repository.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ananke.Infrastructure.Migrations
 {
     [DbContext(typeof(AnankeContext))]
-    partial class AnankeContextModelSnapshot : ModelSnapshot
+    [Migration("20240929030405_GalleryCreate")]
+    partial class GalleryCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

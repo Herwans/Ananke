@@ -7,15 +7,8 @@ namespace Ananke.Api.Controllers
 {
     [ApiController]
     [Route("dashboard")]
-    public class DashboardController : Controller
+    public class DashboardController(ISender sender) : BaseController(sender)
     {
-        private readonly ISender _sender;
-
-        public DashboardController(ISender sender)
-        {
-            _sender = sender;
-        }
-
         [HttpGet("disks-usage")]
         public async Task<IActionResult> DisksUsage(CancellationToken cancellationToken)
         {

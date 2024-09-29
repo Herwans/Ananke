@@ -1,5 +1,5 @@
 ﻿using Ananke.Application.DTO;
-using Ananke.Domain.Entity;
+using Ananke.Domain.Entity.Items;
 
 namespace Ananke.Application.Mappers
 {

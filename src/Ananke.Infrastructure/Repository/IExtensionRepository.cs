@@ -1,4 +1,4 @@
-﻿using Ananke.Domain.Entity;
+﻿using Ananke.Domain.Entity.Items;
 
 namespace Ananke.Infrastructure.Repository
 {

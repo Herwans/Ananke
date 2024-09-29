@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Ananke.Domain.Entity
+namespace Ananke.Domain.Entity.Items
 {
     public record Extension : BaseEntity
     {

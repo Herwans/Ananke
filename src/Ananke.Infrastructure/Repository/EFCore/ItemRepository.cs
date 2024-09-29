@@ -1,8 +1,7 @@
-﻿using Ananke.Domain.Entity;
+﻿using Ananke.Domain.Entity.Items;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
-namespace Ananke.Infrastructure.Repository.Database
+namespace Ananke.Infrastructure.Repository.EFCore
 {
     public class ItemRepository : IItemRepository
     {
@@ -106,6 +105,25 @@ namespace Ananke.Infrastructure.Repository.Database
         public async Task<int> CountAsync(CancellationToken cancellationToken)
         {
             return await _context.Set<Item>().CountAsync(cancellationToken);
+        }
+
+        public async Task<IEnumerable<Item>> GetByExtensionsAsync(string[] extensions, int page = 1, int size = 10, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Item>()
+                .Include(item => item.Folder)
+                .Include(item => item.Extension)
+                .Where(i => extensions.Contains(i.Extension.Name))
+                .Take(size)
+                .Skip(size * (page - 1))
+                .ToListAsync(cancellationToken);
+        }
+
+        public async Task<List<Item>> GetByFolderIdAsync(int folderId, CancellationToken cancellationToken)
+        {
+            return await _context.Set<Item>()
+                .Include(item => item.Folder)
+                .Where(i => i.Folder.Id == folderId)
+                .ToListAsync(cancellationToken);
         }
     }
 }
