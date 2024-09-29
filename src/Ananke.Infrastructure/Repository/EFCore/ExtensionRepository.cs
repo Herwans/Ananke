@@ -1,7 +1,7 @@
-﻿using Ananke.Domain.Entity;
+﻿using Ananke.Domain.Entity.Items;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ananke.Infrastructure.Repository.Database
+namespace Ananke.Infrastructure.Repository.EFCore
 {
     public class ExtensionRepository(AnankeContext context) : IExtensionRepository
     {

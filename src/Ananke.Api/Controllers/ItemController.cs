@@ -9,15 +9,8 @@ namespace Ananke.Api.Controllers
 {
     [ApiController]
     [Route("items")]
-    public class ItemController : Controller
+    public class ItemController(ISender sender) : BaseController(sender)
     {
-        private readonly ISender _sender;
-
-        public ItemController(ISender sender)
-        {
-            _sender = sender;
-        }
-
         [HttpGet]
         public async Task<IActionResult> Index(CancellationToken cancellationToken)
         {

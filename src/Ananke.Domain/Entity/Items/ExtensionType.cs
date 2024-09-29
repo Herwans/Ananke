@@ -1,4 +1,4 @@
-﻿namespace Ananke.Domain.Entity
+﻿namespace Ananke.Domain.Entity.Items
 {
     public record ExtensionType : BaseEntity
     {

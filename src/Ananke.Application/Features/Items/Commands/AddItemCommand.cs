@@ -1,5 +1,5 @@
 ﻿using Ananke.Application.Mappers;
-using Ananke.Domain.Entity;
+using Ananke.Domain.Entity.Items;
 using Ananke.Infrastructure.Repository;
 using MediatR;
 
