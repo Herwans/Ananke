@@ -1,11 +1,5 @@
-﻿using Ananke.Application.DTO;
-using Ananke.Infrastructure.Repository;
+﻿using Ananke.Infrastructure.Persistence.Interfaces.Repositories;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Ananke.Application.Features.Dashboard.Queries
 {

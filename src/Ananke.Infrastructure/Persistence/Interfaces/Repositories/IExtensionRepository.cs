@@ -1,6 +1,6 @@
 ﻿using Ananke.Domain.Entity.Items;
 
-namespace Ananke.Infrastructure.Repository
+namespace Ananke.Infrastructure.Persistence.Interfaces.Repositories
 {
     public interface IExtensionRepository
     {

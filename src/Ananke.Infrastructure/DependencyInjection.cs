@@ -1,12 +1,12 @@
-﻿using Ananke.Infrastructure.Repository;
-using Ananke.Infrastructure.Repository.EFCore;
-using Ananke.Infrastructure.Repository.EFCore.Media.Images;
-using Ananke.Infrastructure.Repository.Media.Images;
+﻿using Ananke.Infrastructure.Persistence.EFCore;
+using Ananke.Infrastructure.Persistence.EFCore.Repositories;
+using Ananke.Infrastructure.Persistence.EFCore.Repositories.Media.Images;
+using Ananke.Infrastructure.Persistence.Interfaces.Repositories;
+using Ananke.Infrastructure.Persistence.Interfaces.Repositories.Media.Images;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Ananke.Application
+namespace Ananke.Infrastructure
 {
     public static class DependencyInjection
     {

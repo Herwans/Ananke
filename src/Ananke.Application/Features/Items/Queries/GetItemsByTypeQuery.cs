@@ -1,7 +1,7 @@
 ﻿using Ananke.Application.DTO;
 using Ananke.Application.Mappers;
 using Ananke.Domain.Entity.Items;
-using Ananke.Infrastructure.Repository;
+using Ananke.Infrastructure.Persistence.Interfaces.Repositories;
 using MediatR;
 using System.Drawing;
 

@@ -3,13 +3,12 @@ using Ananke.Application.Features.Media.Images.Commands;
 using Ananke.Application.Features.Media.Images.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Ananke.Api.Controllers.Media
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class ImageController(ISender sender) : BaseController(sender)
+    [Route("images")]
+    public class ImageController(ISender sender) : BaseSenderController(sender)
     {
         [HttpGet]
         public async Task<IActionResult> GetAllImages(int page = 1, int size = 10, CancellationToken cancellationToken = default)

@@ -1,4 +1,5 @@
 using Ananke.Application;
+using Ananke.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 var AnankePolicy = "_anankePolicy";

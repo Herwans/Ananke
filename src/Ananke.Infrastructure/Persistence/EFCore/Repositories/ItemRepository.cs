@@ -1,29 +1,29 @@
 ﻿using Ananke.Domain.Entity.Items;
+using Ananke.Infrastructure.Persistence.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ananke.Infrastructure.Repository.EFCore
+namespace Ananke.Infrastructure.Persistence.EFCore.Repositories
 {
-    public class ItemRepository : IItemRepository
+    public class ItemRepository(AnankeContext context) : BaseRepository(context), IItemRepository
     {
-        private readonly AnankeContext _context;
-
-        public ItemRepository(AnankeContext context)
-        {
-            _context = context;
-        }
-
         public async Task AddAsync(Item item, CancellationToken cancellationToken = default)
         {
-            Extension? extension = _context.Extensions.FirstOrDefault(ext => ext.Name == item.Extension.Name);
-            if (extension != null)
+            if (item.Extension != null)
             {
-                item.Extension = extension;
+                Extension? extension = _context.Extensions.FirstOrDefault(ext => ext.Name == item.Extension.Name);
+                if (extension != null)
+                {
+                    item.Extension = extension;
+                }
             }
 
-            Folder? folder = _context.Folders.FirstOrDefault(folder => folder.Path == item.Folder.Path);
-            if (folder != null)
+            if (item.Folder != null)
             {
-                item.Folder = folder;
+                Folder? folder = _context.Folders.FirstOrDefault(folder => folder.Path == item.Folder.Path);
+                if (folder != null)
+                {
+                    item.Folder = folder;
+                }
             }
 
             await _context.Items.AddAsync(item, cancellationToken);
@@ -34,8 +34,8 @@ namespace Ananke.Infrastructure.Repository.EFCore
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var extensions = await _context.Extensions.ToDictionaryAsync(e => e.Name, cancellationToken);
-            var folders = await _context.Folders.ToDictionaryAsync(f => f.Path, cancellationToken);
+            Dictionary<string, Extension> extensions = await _context.Extensions.ToDictionaryAsync(e => e.Name, cancellationToken);
+            Dictionary<string, Folder> folders = await _context.Folders.ToDictionaryAsync(f => f.Path, cancellationToken);
 
             foreach (var item in items)
             {
