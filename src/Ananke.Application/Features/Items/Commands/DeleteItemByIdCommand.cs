@@ -1,4 +1,4 @@
-﻿using Ananke.Infrastructure.Repository;
+﻿using Ananke.Infrastructure.Persistence.Interfaces.Repositories;
 using MediatR;
 
 namespace Ananke.Application.Features.Items.Commands

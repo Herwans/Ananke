@@ -1,6 +1,6 @@
 ﻿using Ananke.Domain.Entity.Media.Images.Galleries;
 
-namespace Ananke.Infrastructure.Repository.Media.Images
+namespace Ananke.Infrastructure.Persistence.Interfaces.Repositories.Media.Images
 {
     public interface IGalleryRepository
     {

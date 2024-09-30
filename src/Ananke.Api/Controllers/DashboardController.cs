@@ -7,7 +7,7 @@ namespace Ananke.Api.Controllers
 {
     [ApiController]
     [Route("dashboard")]
-    public class DashboardController(ISender sender) : BaseController(sender)
+    public class DashboardController(ISender sender) : BaseSenderController(sender)
     {
         [HttpGet("disks-usage")]
         public async Task<IActionResult> DisksUsage(CancellationToken cancellationToken)

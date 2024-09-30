@@ -2,7 +2,7 @@
 using Ananke.Domain.Entity.Media.Images.Galleries;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ananke.Infrastructure.Repository.EFCore
+namespace Ananke.Infrastructure.Persistence.EFCore
 {
     public class AnankeContext(DbContextOptions<AnankeContext> options) : DbContext(options)
     {

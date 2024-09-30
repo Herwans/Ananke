@@ -1,13 +1,11 @@
 ﻿using Ananke.Domain.Entity.Media.Images.Galleries;
-using Ananke.Infrastructure.Repository.Media.Images;
+using Ananke.Infrastructure.Persistence.Interfaces.Repositories.Media.Images;
 using Microsoft.EntityFrameworkCore;
 
-namespace Ananke.Infrastructure.Repository.EFCore.Media.Images
+namespace Ananke.Infrastructure.Persistence.EFCore.Repositories.Media.Images
 {
-    public class GalleryRepository(AnankeContext context) : IGalleryRepository
+    public class GalleryRepository(AnankeContext context) : BaseRepository(context), IGalleryRepository
     {
-        private readonly AnankeContext _context = context;
-
         public async Task CreateAsync(Gallery gallery, CancellationToken cancellationToken = default)
         {
             await _context.Galleries.AddAsync(gallery, cancellationToken);

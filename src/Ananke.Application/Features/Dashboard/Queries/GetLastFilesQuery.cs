@@ -1,6 +1,6 @@
 ﻿using Ananke.Application.DTO;
 using Ananke.Application.Mappers;
-using Ananke.Infrastructure.Repository;
+using Ananke.Infrastructure.Persistence.Interfaces.Repositories;
 using MediatR;
 
 namespace Ananke.Application.Features.Dashboard.Queries

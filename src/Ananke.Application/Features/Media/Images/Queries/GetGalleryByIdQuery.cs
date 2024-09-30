@@ -2,7 +2,7 @@
 using Ananke.Application.Mappers;
 using Ananke.Domain.Entity.Items;
 using Ananke.Domain.Entity.Media.Images.Galleries;
-using Ananke.Infrastructure.Repository.Media.Images;
+using Ananke.Infrastructure.Persistence.Interfaces.Repositories.Media.Images;
 using MediatR;
 
 namespace Ananke.Application.Features.Media.Images.Queries
